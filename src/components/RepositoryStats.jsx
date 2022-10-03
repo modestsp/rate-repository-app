@@ -5,7 +5,13 @@ import { numFormatter } from "../utils";
 const RepositoryStats = ({ item }) => {
   const { stargazersCount, forksCount, ratingAverage, reviewCount } = item;
   return (
-    <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginBottom: 10,
+      }}
+    >
       <View>
         <Text fontWeight="bold">{numFormatter(stargazersCount)}</Text>
         <Text fontWeight="normal">Stars</Text>
