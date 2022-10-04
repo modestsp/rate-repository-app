@@ -1,6 +1,6 @@
-import Text from "./Text";
+import Text from "../Text";
 import { View } from "react-native";
-import { numFormatter } from "../utils";
+import { numFormatter } from "../../utils";
 
 const RepositoryStats = ({ item }) => {
   const { stargazersCount, forksCount, ratingAverage, reviewCount } = item;

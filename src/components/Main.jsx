@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import RepositoryList from "./RepositoryList";
-import AppBar from "./AppBar";
+import { StyleSheet, View } from "react-native";
+import RepositoryList from "./Repositories/RepositoryList.jsx";
+import AppBar from "./AppBar/AppBar";
 import { Route, Routes, Navigate, useParams } from "react-router-native";
 import SignIn from "./SignIn";
-import RepositoryItem from "./RepositoryItem";
+import SingleRepository from "./Repositories/SingleRepository.jsx";
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -21,7 +22,7 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} exact />
-        <Route path="/:id" element={<RepositoryItem />} exact />
+        <Route path="/:id" element={<SingleRepository />} exact />
         <Route path="/sign" element={<SignIn />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

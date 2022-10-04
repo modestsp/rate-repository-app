@@ -1,8 +1,8 @@
 import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem.jsx";
-import useRepositories from "../hooks/useRepositories.js";
-import Text from "./Text.jsx";
+import useRepositories from "../../hooks/useRepositories.js";
 import { useNavigate } from "react-router-native";
+import Loading from "../Loading.jsx";
 
 const styles = StyleSheet.create({
   separator: {
@@ -35,11 +35,7 @@ const RepositoryList = () => {
     console.error(error);
   }
   if (loading) {
-    return (
-      <View>
-        <Text style={styles.loading}>LOADING!</Text>
-      </View>
-    );
+    return <Loading />;
   }
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)

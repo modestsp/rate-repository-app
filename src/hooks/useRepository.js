@@ -2,16 +2,19 @@ import { useQuery } from "@apollo/client";
 import { GET_REPOSITORY } from "../graphql/queries";
 
 const useRepository = (id) => {
-  const result = useQuery(GET_REPOSITORY, {
-    fetchPolicy: "cache-and-network",
+  const { data, error, loading } = useQuery(GET_REPOSITORY, {
     variables: {
       repositoryId: id,
     },
+    fetchPolicy: "cache-and-network",
   });
 
-  console.log("result", result);
-  if (result.data) {
-    return result;
+  if (data) {
+    return {
+      repository: data.repository,
+      errorRepository: error,
+      loadingRepository: loading,
+    };
   } else {
     return {};
   }

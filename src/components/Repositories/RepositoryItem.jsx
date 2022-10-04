@@ -1,13 +1,8 @@
 import React from "react";
-import { View, Image, StyleSheet, Button } from "react-native";
-import theme from "../theme";
+import { View, Image, StyleSheet } from "react-native";
+import theme from "../../theme";
 import RepositoryStats from "./RepositoryStats";
-import { useParams } from "react-router-native";
-import Text from "./Text";
-import useRepository from "../hooks/useRepository";
-import { useQuery } from "@apollo/client";
-import { GET_REPOSITORY } from "../graphql/queries";
-import * as Linking from "expo-linking";
+import Text from "../Text";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,35 +38,7 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryItem = ({ item }) => {
-  const { id } = useParams();
-  console.log("id en item", id);
-  let result = {};
-
-  if (id) {
-    result = useQuery(GET_REPOSITORY, {
-      variables: {
-        repositoryId: id,
-      },
-    });
-    console.log("data", result);
-  }
-  if (result.loading) {
-    return (
-      <View>
-        <Text>LOADING!</Text>
-      </View>
-    );
-  }
-
-  const openInGithub = () => {
-    const url = result.data.repository.url;
-    console.log("url");
-    console.log("GOING TO GITHUB");
-    Linking.openURL(url);
-  };
-
-  const { fullName, description, language, ownerAvatarUrl } =
-    item || result.data.repository;
+  const { fullName, description, language, ownerAvatarUrl } = item;
 
   return (
     <View style={styles.container}>
@@ -92,8 +59,7 @@ const RepositoryItem = ({ item }) => {
           </View>
         </View>
       </View>
-      <RepositoryStats item={item || result.data.repository} />
-      {id ? <Button onPress={openInGithub} title="Open in Github" /> : null}
+      <RepositoryStats item={item} />
     </View>
   );
 };

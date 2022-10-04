@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import Text from "./Text";
+import Text from "../Text";
 import { Link } from "react-router-native";
 import { useEffect, useState } from "react";
 import { Pressable } from "react-native";
-import useAuthStorage from "../hooks/useAuthStorage";
+import useAuthStorage from "../../hooks/useAuthStorage";
 import { useApolloClient } from "@apollo/client";
 import { useNavigate } from "react-router-native";
 
