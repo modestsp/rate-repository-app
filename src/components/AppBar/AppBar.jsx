@@ -48,7 +48,10 @@ const AppBar = () => {
       <ScrollView horizontal={true}>
         <AppBarTab to="/">Repositories</AppBarTab>
         {data.me ? (
-          <AppBarTab to="/sign">Sign Out</AppBarTab>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <AppBarTab to="/create-review">Create a review</AppBarTab>
+            <AppBarTab to="/sign">Sign Out</AppBarTab>
+          </View>
         ) : (
           <AppBarTab to="/sign">Sign In</AppBarTab>
         )}

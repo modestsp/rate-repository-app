@@ -7,10 +7,6 @@ import useAuthStorage from "../../hooks/useAuthStorage";
 import { useApolloClient } from "@apollo/client";
 import { useNavigate } from "react-router-native";
 
-// return (
-
-// );
-
 const AppBarTab = ({ children, to }) => {
   const [signOut, setSignOut] = useState(false);
   const authStorage = useAuthStorage();
@@ -26,8 +22,10 @@ const AppBarTab = ({ children, to }) => {
     if (children === "Sign Out") {
       console.log("HAY LOGOUT");
       setSignOut(true);
+    } else {
+      setSignOut(false);
     }
-  }, []);
+  }, [children]);
 
   return signOut ? (
     <Pressable onPress={logout}>

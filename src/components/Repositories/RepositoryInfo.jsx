@@ -8,7 +8,7 @@ const RepositoryInfo = ({ repository, url }) => {
   const { description, language, ownerAvatarUrl, fullName } = repository;
 
   const openInGithub = () => {
-    console.log("url");
+    console.log("url", url);
     console.log("GOING TO GITHUB");
     Linking.openURL(url);
   };

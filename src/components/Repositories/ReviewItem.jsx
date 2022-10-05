@@ -6,7 +6,7 @@ import Text from "../Text";
 const ReviewItem = ({ review }) => {
   const { text, rating, createdAt, user } = review.node;
   const { username } = user;
-  console.log(format(new Date(createdAt), "MM/dd/yyyy"));
+
   return (
     <View style={styles.container}>
       <View>

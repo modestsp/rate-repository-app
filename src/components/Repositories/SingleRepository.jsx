@@ -6,11 +6,14 @@ import ReviewItem from "./ReviewItem";
 import useRepository from "../../hooks/useRepository";
 import useReviews from "../../hooks/useReviews";
 import Loading from "../Loading";
+import { GET_USER } from "../../graphql/queries";
+import { useQuery } from "@apollo/client";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const SingleRepository = () => {
   const { id } = useParams();
+  console.log(id);
   const { repository, errorRepository, loadingRepository } = useRepository(id);
   const { reviews, errorReviews, loadingReviews } = useReviews(id);
 
@@ -21,13 +24,14 @@ const SingleRepository = () => {
   if (loadingRepository || loadingReviews) {
     return <Loading />;
   }
+
   const url = repository.url;
   return (
     <FlatList
       data={reviews}
       renderItem={({ item }) => <ReviewItem review={item} />}
       ItemSeparatorComponent={ItemSeparator}
-      keyExtractor={({ id }) => id}
+      keyExtractor={({ node }) => node.id}
       ListHeaderComponent={() => (
         <RepositoryInfo repository={repository} url={url} />
       )}

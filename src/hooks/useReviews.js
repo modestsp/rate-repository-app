@@ -3,10 +3,10 @@ import { useQuery } from "@apollo/client";
 
 const useReviews = (id) => {
   const { data, error, loading } = useQuery(GET_REVIEWS, {
+    fetchPolicy: "cache-and-network",
     variables: {
       repositoryId: id,
     },
-    fetchPolicy: "cache-and-network",
   });
 
   if (data) {
@@ -16,7 +16,7 @@ const useReviews = (id) => {
       loadingReviews: loading,
     };
   } else {
-    return {};
+    return { loadingReviews: true };
   }
 };
 

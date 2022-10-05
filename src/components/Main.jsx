@@ -2,9 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import RepositoryList from "./Repositories/RepositoryList.jsx";
 import AppBar from "./AppBar/AppBar";
-import { Route, Routes, Navigate, useParams } from "react-router-native";
+import { Route, Routes, Navigate } from "react-router-native";
 import SignIn from "./SignIn";
 import SingleRepository from "./Repositories/SingleRepository.jsx";
+import { CreateReview } from "./Repositories/CreateReview.jsx";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,8 +16,6 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-  const { id } = useParams();
-  console.log("ID EN MAIN", id);
   return (
     <View style={styles.container}>
       <AppBar />
@@ -24,6 +23,7 @@ const Main = () => {
         <Route path="/" element={<RepositoryList />} exact />
         <Route path="/:id" element={<SingleRepository />} exact />
         <Route path="/sign" element={<SignIn />} exact />
+        <Route path="/create-review" element={<CreateReview />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>
