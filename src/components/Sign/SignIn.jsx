@@ -1,10 +1,10 @@
-import Text from "./Text";
-import FormikTextInput from "./FormikTextInput";
+import Text from "../Text";
+import FormikTextInput from "../FormikTextInput";
 import { Formik } from "formik";
 import { View, Pressable, StyleSheet } from "react-native";
-import theme from "../theme";
+import theme from "../../theme";
 import * as yup from "yup";
-import useSignIn from "../hooks/useSignIn";
+import useSignIn from "../../hooks/useSignIn";
 import { useNavigate } from "react-router-native";
 
 const initialValues = {

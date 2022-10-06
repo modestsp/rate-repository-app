@@ -53,7 +53,10 @@ const AppBar = () => {
             <AppBarTab to="/sign">Sign Out</AppBarTab>
           </View>
         ) : (
-          <AppBarTab to="/sign">Sign In</AppBarTab>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <AppBarTab to="/sign">Sign In</AppBarTab>
+            <AppBarTab to="/sign-up">Sign Up</AppBarTab>
+          </View>
         )}
       </ScrollView>
     </View>

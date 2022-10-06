@@ -1,13 +1,10 @@
 import { useParams } from "react-router-native";
 import { View, FlatList, StyleSheet } from "react-native";
-// import theme from "../../theme";
 import RepositoryInfo from "./RepositoryInfo";
 import ReviewItem from "./ReviewItem";
 import useRepository from "../../hooks/useRepository";
 import useReviews from "../../hooks/useReviews";
 import Loading from "../Loading";
-import { GET_USER } from "../../graphql/queries";
-import { useQuery } from "@apollo/client";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
