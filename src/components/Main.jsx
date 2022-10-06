@@ -7,6 +7,7 @@ import SignIn from "./Sign/SignIn.jsx";
 import SignUp from "./Sign/SignUp.jsx";
 import SingleRepository from "./Repositories/SingleRepository.jsx";
 import { CreateReview } from "./Repositories/CreateReview.jsx";
+import { Picker } from "@react-native-picker/picker";
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  console.log(Picker);
   return (
     <View style={styles.container}>
       <AppBar />

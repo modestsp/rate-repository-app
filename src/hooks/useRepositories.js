@@ -1,19 +1,41 @@
 import { useQuery } from "@apollo/client";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = () => {
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: "cache-and-network",
-  });
-
-  if (data) {
-    return { repositories: data.repositories, loading, error };
+const useRepositories = (selectedFilter = "CREATED_AT", order = "DESC") => {
+  if (selectedFilter === "ASC") {
+    const { data, error, loading } = useQuery(GET_REPOSITORIES, {
+      fetchPolicy: "cache-and-network",
+      variables: {
+        orderBy: "RATING_AVERAGE",
+        orderDirection: "ASC",
+      },
+    });
+    console.log(loading);
+    console.log(data);
+    if (data) {
+      return { repositories: data.repositories, loading, error };
+    } else {
+      return {};
+    }
   } else {
-    return {};
+    const { data, error, loading } = useQuery(GET_REPOSITORIES, {
+      fetchPolicy: "cache-and-network",
+      variables: {
+        orderBy: selectedFilter,
+        orderDirection: order,
+      },
+    });
+
+    if (data) {
+      return { repositories: data.repositories, loading, error };
+    } else {
+      return {};
+    }
   }
 };
 
 export default useRepositories;
+
 // ************** Fetch Without GraphQL *********************
 // const useRepositories = () => {
 //   const [repositories, setRepositories] = useState();
