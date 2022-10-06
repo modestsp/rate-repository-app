@@ -1,17 +1,17 @@
 import { useQuery } from "@apollo/client";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = (selectedFilter = "CREATED_AT", order = "DESC") => {
+const useRepositories = (selectedFilter = "CREATED_AT", searchQuery) => {
   if (selectedFilter === "ASC") {
     const { data, error, loading } = useQuery(GET_REPOSITORIES, {
       fetchPolicy: "cache-and-network",
       variables: {
         orderBy: "RATING_AVERAGE",
         orderDirection: "ASC",
+        searchKeyword: searchQuery,
       },
     });
-    console.log(loading);
-    console.log(data);
+
     if (data) {
       return { repositories: data.repositories, loading, error };
     } else {
@@ -22,10 +22,13 @@ const useRepositories = (selectedFilter = "CREATED_AT", order = "DESC") => {
       fetchPolicy: "cache-and-network",
       variables: {
         orderBy: selectedFilter,
-        orderDirection: order,
+        orderDirection: "DESC",
+        searchKeyword: searchQuery,
       },
     });
 
+    console.log("DATA", data);
+    console.log("LOADING", loading);
     if (data) {
       return { repositories: data.repositories, loading, error };
     } else {

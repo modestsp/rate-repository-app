@@ -4,15 +4,24 @@ import useRepositories from "../../hooks/useRepositories.js";
 import { useNavigate } from "react-router-native";
 import Loading from "../Loading.jsx";
 import { Picker } from "@react-native-picker/picker";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRef } from "react";
-
+import SearchInput from "./SearchInput.jsx";
+import { useDebounce } from "use-debounce";
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
   const [selectedFilter, setSelectedFilter] = useState();
-  const { repositories, loading, error } = useRepositories(selectedFilter);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch] = useDebounce(searchQuery, 100);
+  const { repositories, loading, error } = useRepositories(
+    selectedFilter,
+    debouncedSearch
+  );
 
+  const onChangeSearch = (query) => {
+    setSearchQuery(query);
+  };
   const navigate = useNavigate();
 
   const pickerRef = useRef();
@@ -47,6 +56,11 @@ const RepositoryList = () => {
 
   return (
     <View>
+      <SearchInput
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        onChangeSearch={onChangeSearch}
+      />
       <Picker
         ref={pickerRef}
         selectedValue={selectedFilter}
