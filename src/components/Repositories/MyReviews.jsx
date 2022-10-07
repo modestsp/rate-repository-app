@@ -34,7 +34,7 @@ const MyReviews = () => {
           style: "cancel",
         },
         {
-          text: "OK",
+          text: "DELETE",
           onPress: () => {
             handleDeleteReview(id);
             refetch();
