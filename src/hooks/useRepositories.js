@@ -1,39 +1,81 @@
 import { useQuery } from "@apollo/client";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = (selectedFilter = "CREATED_AT", searchQuery) => {
+const useRepositories = (first, selectedFilter = "CREATED_AT", searchQuery) => {
   if (selectedFilter === "ASC") {
-    const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-      fetchPolicy: "cache-and-network",
-      variables: {
-        orderBy: "RATING_AVERAGE",
-        orderDirection: "ASC",
-        searchKeyword: searchQuery,
-      },
-    });
+    const { data, error, fetchMore, loading, ...result } = useQuery(
+      GET_REPOSITORIES,
+      {
+        fetchPolicy: "cache-and-network",
+        variables: {
+          orderBy: "RATING_AVERAGE",
+          first,
+          orderDirection: "ASC",
+          searchKeyword: searchQuery,
+        },
+      }
+    );
+    const handleFetchMore = () => {
+      const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+      console.log("CANFETCHMORE", canFetchMore);
+      if (!canFetchMore) {
+        return;
+      }
+      fetchMore({
+        variables: {
+          after: data.repositories.pageInfo.endCursor,
+          orderBy: "RATING_AVERAGE",
+          orderDirection: "ASC",
+          searchKeyword: searchQuery,
+          first,
+        },
+      });
+    };
 
-    if (data) {
-      return { repositories: data.repositories, loading, error };
-    } else {
-      return {};
-    }
+    return {
+      repositories: data?.repositories,
+      fetchMore: handleFetchMore,
+      loading,
+      ...result,
+    };
   } else {
-    const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-      fetchPolicy: "cache-and-network",
-      variables: {
-        orderBy: selectedFilter,
-        orderDirection: "DESC",
-        searchKeyword: searchQuery,
-      },
-    });
+    const { data, error, loading, fetchMore, ...result } = useQuery(
+      GET_REPOSITORIES,
+      {
+        fetchPolicy: "cache-and-network",
+        variables: {
+          orderBy: selectedFilter,
+          orderDirection: "DESC",
+          searchKeyword: searchQuery,
+          first,
+        },
+      }
+    );
 
-    console.log("DATA", data);
-    console.log("LOADING", loading);
-    if (data) {
-      return { repositories: data.repositories, loading, error };
-    } else {
-      return {};
-    }
+    const handleFetchMore = () => {
+      const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+
+      if (!canFetchMore) {
+        return;
+      }
+
+      fetchMore({
+        variables: {
+          after: data.repositories.pageInfo.endCursor,
+          orderBy: selectedFilter,
+          orderDirection: "DESC",
+          searchKeyword: searchQuery,
+          first,
+        },
+      });
+    };
+
+    return {
+      repositories: data?.repositories,
+      fetchMore: handleFetchMore,
+      loading,
+      ...result,
+    };
   }
 };
 

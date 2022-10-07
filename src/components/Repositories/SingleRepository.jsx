@@ -10,9 +10,12 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const SingleRepository = () => {
   const { id } = useParams();
-  console.log(id);
   const { repository, errorRepository, loadingRepository } = useRepository(id);
-  const { reviews, errorReviews, loadingReviews } = useReviews(id);
+  const first = 5;
+  const { reviews, errorReviews, loadingReviews, fetchMore } = useReviews(
+    id,
+    first
+  );
 
   if (errorRepository || errorReviews) {
     console.error(errorRepository, errorReviews);
@@ -21,6 +24,11 @@ const SingleRepository = () => {
   if (loadingRepository || loadingReviews) {
     return <Loading />;
   }
+
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
+  };
 
   const url = repository.url;
   return (
@@ -32,6 +40,8 @@ const SingleRepository = () => {
       ListHeaderComponent={() => (
         <RepositoryInfo repository={repository} url={url} />
       )}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

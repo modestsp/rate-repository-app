@@ -14,7 +14,9 @@ const RepositoryList = () => {
   const [selectedFilter, setSelectedFilter] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch] = useDebounce(searchQuery, 100);
-  const { repositories, loading, error } = useRepositories(
+  const first = 8;
+  const { repositories, loading, error, fetchMore } = useRepositories(
+    first,
     selectedFilter,
     debouncedSearch
   );
@@ -26,13 +28,6 @@ const RepositoryList = () => {
 
   const pickerRef = useRef();
 
-  function open() {
-    pickerRef.current.focus();
-  }
-
-  function close() {
-    pickerRef.current.blur();
-  }
   const handlePress = (item) => {
     navigate(`/${item.id}`, { replace: true });
   };
@@ -53,6 +48,11 @@ const RepositoryList = () => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
+
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
+  };
 
   return (
     <View>
@@ -78,6 +78,8 @@ const RepositoryList = () => {
         ItemSeparatorComponent={ItemSeparator}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
