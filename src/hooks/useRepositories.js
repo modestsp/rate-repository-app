@@ -17,7 +17,6 @@ const useRepositories = (first, selectedFilter = "CREATED_AT", searchQuery) => {
     );
     const handleFetchMore = () => {
       const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
-      console.log("CANFETCHMORE", canFetchMore);
       if (!canFetchMore) {
         return;
       }

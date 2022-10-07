@@ -13,3 +13,26 @@ export const CORE_REPOSITORY_FIELDS = gql`
     ownerAvatarUrl
   }
 `;
+
+export const CORE_REVIEW_FIELDS = gql`
+  fragment CoreReviewFields on ReviewConnection {
+    edges {
+      node {
+        id
+        text
+        rating
+        createdAt
+        user {
+          id
+          username
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      startCursor
+      hasNextPage
+    }
+  }
+`;

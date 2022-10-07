@@ -4,7 +4,7 @@ import theme from "../../theme";
 import Text from "../Text";
 
 const ReviewItem = ({ review }) => {
-  const { text, rating, createdAt, user } = review.node;
+  const { text, rating, createdAt, user, repositoryId } = review.node;
   const { username } = user;
 
   return (
@@ -16,7 +16,7 @@ const ReviewItem = ({ review }) => {
       </View>
       <View style={styles.content}>
         <>
-          <Text fontWeight="bold">{username}</Text>
+          <Text fontWeight="bold">{repositoryId || username}</Text>
           <Text style={styles.date}>
             {format(new Date(createdAt), "MM.dd.yyyy")}
           </Text>

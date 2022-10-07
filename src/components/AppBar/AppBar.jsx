@@ -50,6 +50,7 @@ const AppBar = () => {
         {data.me ? (
           <View style={{ display: "flex", flexDirection: "row" }}>
             <AppBarTab to="/create-review">Create a review</AppBarTab>
+            <AppBarTab to="/my-reviews">My reviews</AppBarTab>
             <AppBarTab to="/sign">Sign Out</AppBarTab>
           </View>
         ) : (
